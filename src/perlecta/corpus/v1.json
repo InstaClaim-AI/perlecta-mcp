@@ -1,0 +1,402 @@
+{
+  "version": "1",
+  "plafonds": {
+    "taille_octets_max": 52428800,
+    "pages_max": 500,
+    "duree_ms_max": 20000,
+    "memoire_octets_max": 1073741824,
+    "expansion_archive_max": 100,
+    "profondeur_imbrication_max": 4,
+    "extrait_caracteres_max": 600,
+    "anomalies_max": 200,
+    "operateurs_flux_max": 2000000
+  },
+  "seuils": {
+    "distance_couleur_fond_max": 0.08,
+    "taille_police_min": 1.0,
+    "marge_hors_page": 2.0,
+    "caracteres_invisibles_min": 1,
+    "homoglyphes_mots_min": 1,
+    "code_champ_mots_min": 5,
+    "divergence_alternatives_min": 0.5,
+    "divergence_alternatives_mots_min": 10,
+    "divergence_rendu_min": 0.3,
+    "divergence_rendu_mots_min": 8,
+    "image_pleine_page_part_min": 0.9
+  },
+  "codes": {
+    "PDF_RENDU_INVISIBLE": {
+      "gravite": "majeure",
+      "explication": "Texte place en mode de rendu invisible : il est present dans le fichier et extractible, mais n'est ni dessine ni imprime."
+    },
+    "PDF_COULEUR_FOND": {
+      "gravite": "majeure",
+      "explication": "Texte dont la couleur est indiscernable du fond effectif sous les glyphes."
+    },
+    "PDF_TAILLE_NULLE": {
+      "gravite": "majeure",
+      "explication": "Texte dont la taille de police est nulle ou inferieure au seuil de lisibilite."
+    },
+    "PDF_HORS_PAGE": {
+      "gravite": "majeure",
+      "explication": "Texte dont la position tombe hors de la zone de rognage ou de la zone support de la page."
+    },
+    "PDF_CALQUE_MASQUE": {
+      "gravite": "majeure",
+      "explication": "Texte place dans un groupe de contenu optionnel desactive par defaut."
+    },
+    "PDF_OCCULTATION": {
+      "gravite": "majeure",
+      "explication": "Texte recouvert par une image ou un rectangle opaque selon l'ordre de trace."
+    },
+    "PDF_ACTION_AUTOMATIQUE": {
+      "gravite": "majeure",
+      "explication": "Le document porte une action qui ne demande pas l'accord de son lecteur : declenchement a l'ouverture ou au changement de page, script embarque, lancement de programme, envoi de formulaire ou fichier joint."
+    },
+    "PDF_LIEN_CLIQUABLE": {
+      "gravite": "mineure",
+      "explication": "Le document porte un lien que le lecteur doit cliquer pour l'activer. C'est courant dans un document ordinaire ; la cible est rapportee a titre d'inventaire des sorties possibles."
+    },
+    "PDF_COUCHE_NUMERISEE": {
+      "gravite": "mineure",
+      "explication": "La page porte une couche de texte invisible sous une image de page entiere. C'est la forme normale d'un document numerise avec reconnaissance optique, et le texte est rapporte sans etre tenu pour une dissimulation. Seule la comparaison au rendu peut verifier qu'il dit bien ce que l'image montre."
+    },
+    "PDF_DIVERGENCE_RENDU": {
+      "gravite": "majeure",
+      "explication": "La couche texte du document diverge du texte obtenu par reconnaissance optique de son rendu."
+    },
+    "CAR_INVISIBLES": {
+      "gravite": "mineure",
+      "explication": "Presence de caracteres de largeur nulle, de controles bidirectionnels ou de selecteurs de variante."
+    },
+    "META_INSTRUCTION": {
+      "gravite": "mineure",
+      "explication": "Une metadonnee du document prend une forme imperative ou s'adresse a un lecteur automatique."
+    },
+    "HOMOGLYPHES": {
+      "gravite": "mineure",
+      "explication": "Melange de systemes d'ecriture a l'interieur d'un meme mot."
+    },
+    "DOCX_TEXTE_MASQUE": {
+      "gravite": "majeure",
+      "explication": "Texte portant la propriete de masquage, invisible a l'affichage et a l'impression."
+    },
+    "EML_CONTENU_MASQUE": {
+      "gravite": "majeure",
+      "explication": "Partie HTML contenant du texte rendu invisible par une regle de style."
+    }
+  },
+  "caracteres_invisibles": [
+    {
+      "de": "U+200B",
+      "a": "U+200B",
+      "classe": "largeur_nulle",
+      "libelle": "espace de largeur nulle"
+    },
+    {
+      "de": "U+200C",
+      "a": "U+200D",
+      "classe": "liant",
+      "libelle": "antiliant et liant de largeur nulle"
+    },
+    {
+      "de": "U+2060",
+      "a": "U+2064",
+      "classe": "largeur_nulle",
+      "libelle": "gluon et operateurs invisibles"
+    },
+    {
+      "de": "U+FEFF",
+      "a": "U+FEFF",
+      "classe": "largeur_nulle",
+      "libelle": "espace insecable de largeur nulle"
+    },
+    {
+      "de": "U+180E",
+      "a": "U+180E",
+      "classe": "largeur_nulle",
+      "libelle": "separateur de voyelles mongol"
+    },
+    {
+      "de": "U+00AD",
+      "a": "U+00AD",
+      "classe": "conditionnel",
+      "libelle": "trait d'union conditionnel"
+    },
+    {
+      "de": "U+034F",
+      "a": "U+034F",
+      "classe": "liant",
+      "libelle": "liant de graphemes"
+    },
+    {
+      "de": "U+061C",
+      "a": "U+061C",
+      "classe": "bidirectionnel",
+      "libelle": "marque de lettre arabe"
+    },
+    {
+      "de": "U+200E",
+      "a": "U+200F",
+      "classe": "bidirectionnel",
+      "libelle": "marques gauche-droite et droite-gauche"
+    },
+    {
+      "de": "U+202A",
+      "a": "U+202E",
+      "classe": "bidirectionnel",
+      "libelle": "controles d'enchassement et de forcage"
+    },
+    {
+      "de": "U+2066",
+      "a": "U+2069",
+      "classe": "bidirectionnel",
+      "libelle": "controles d'isolement"
+    },
+    {
+      "de": "U+2028",
+      "a": "U+2029",
+      "classe": "separateur",
+      "libelle": "separateurs de ligne et de paragraphe"
+    },
+    {
+      "de": "U+FE00",
+      "a": "U+FE0F",
+      "classe": "selecteur_variante",
+      "libelle": "selecteurs de variante"
+    },
+    {
+      "de": "U+E0100",
+      "a": "U+E01EF",
+      "classe": "selecteur_variante",
+      "libelle": "selecteurs de variante supplementaires"
+    },
+    {
+      "de": "U+E0000",
+      "a": "U+E007F",
+      "classe": "etiquette",
+      "libelle": "caracteres d'etiquette"
+    },
+    {
+      "de": "U+115F",
+      "a": "U+1160",
+      "classe": "remplissage",
+      "libelle": "remplissages hangul"
+    },
+    {
+      "de": "U+3164",
+      "a": "U+3164",
+      "classe": "remplissage",
+      "libelle": "remplissage hangul"
+    },
+    {
+      "de": "U+FFA0",
+      "a": "U+FFA0",
+      "classe": "remplissage",
+      "libelle": "remplissage hangul demi-chasse"
+    },
+    {
+      "de": "U+1D173",
+      "a": "U+1D17A",
+      "classe": "formatage",
+      "libelle": "controles de notation musicale"
+    }
+  ],
+  "motifs_instruction": [
+    {
+      "motif": "\\b(ignore[sz]?|oublie[sz]?|disregard|forget|override)\\b.{0,40}\\b(consignes?|instructions?|r[èe]gles?|rules?|prompts?|pr[ée]c[ée]dent\\w*|previous|above|prior)\\b",
+      "libelle": "demande d'ignorer des consignes"
+    },
+    {
+      "motif": "\\b(tu dois|vous devez|il faut que (tu|vous)|you (must|should|have to|need to)|you are (now|required))\\b",
+      "libelle": "injonction a la deuxieme personne"
+    },
+    {
+      "motif": "\\b(agis|agissez|comporte-toi|act|behave|pretend)\\b.{0,10}\\b(comme|as|like)\\b",
+      "libelle": "demande d'adopter un role"
+    },
+    {
+      "motif": "\\b(assistant|chatbot|LLM|language model|mod[èe]le de langage|system prompt|invite syst[èe]me|AI agent|agent (IA|d'IA))\\b",
+      "libelle": "adresse a un lecteur automatique"
+    },
+    {
+      "motif": "\\b(proc[èe]de[sz]? au|proceed (to|with))\\b",
+      "libelle": "injonction de proceder"
+    },
+    {
+      "motif": "\\b(classe[sz]?|marque[sz]?|consid[èe]re[sz]?|classify|mark|treat|consider)\\b.{0,30}\\b(conforme|valid[ée]e?|approuv[ée]e?|sans (anomalie|risque)|as (compliant|valid|approved|safe))\\b",
+      "libelle": "injonction de qualification"
+    },
+    {
+      "motif": "\\b(ne (v[ée]rifie[sz]?|contr[ôo]le[sz]?) pas|sans (v[ée]rification|contr[ôo]le)|do not (verify|check|review)|skip (verification|validation|review))\\b",
+      "libelle": "demande de ne pas verifier"
+    },
+    {
+      "motif": "\\b(r[ée]ponds?|answer|reply|respond)\\b.{0,20}\\b(uniquement|seulement|only)\\b",
+      "libelle": "injonction de reponse"
+    }
+  ],
+  "homoglyphes": {
+    "scripts": [
+      "LATIN",
+      "CYRILLIC",
+      "GREEK",
+      "ARMENIAN",
+      "HEBREW",
+      "ARABIC",
+      "SYRIAC",
+      "THAANA",
+      "DEVANAGARI",
+      "BENGALI",
+      "GURMUKHI",
+      "GUJARATI",
+      "ORIYA",
+      "TAMIL",
+      "TELUGU",
+      "KANNADA",
+      "MALAYALAM",
+      "SINHALA",
+      "THAI",
+      "LAO",
+      "TIBETAN",
+      "MYANMAR",
+      "GEORGIAN",
+      "HANGUL",
+      "ETHIOPIC",
+      "CHEROKEE",
+      "KHMER",
+      "MONGOLIAN",
+      "HIRAGANA",
+      "KATAKANA",
+      "CJK",
+      "BOPOMOFO",
+      "YI",
+      "LISU",
+      "VAI",
+      "NKO",
+      "TIFINAGH",
+      "COPTIC",
+      "GLAGOLITIC"
+    ],
+    "groupes_compatibles": [
+      [
+        "HIRAGANA",
+        "KATAKANA",
+        "CJK"
+      ],
+      [
+        "HANGUL",
+        "CJK"
+      ],
+      [
+        "BOPOMOFO",
+        "CJK"
+      ]
+    ],
+    "lettres_tolerees": "µΩΔπΣαβγλσΘθ",
+    "exceptions": [
+      "µm",
+      "µs",
+      "µg",
+      "µl",
+      "kΩ",
+      "MΩ",
+      "mΩ",
+      "ΔT",
+      "ΔP",
+      "ΔV",
+      "Δt"
+    ]
+  },
+  "champs_docx_connus": [
+    "PAGE",
+    "NUMPAGES",
+    "SECTIONPAGES",
+    "DATE",
+    "TIME",
+    "CREATEDATE",
+    "SAVEDATE",
+    "PRINTDATE",
+    "TOC",
+    "HYPERLINK",
+    "REF",
+    "PAGEREF",
+    "NOTEREF",
+    "SEQ",
+    "MERGEFIELD",
+    "MERGEREC",
+    "MERGESEQ",
+    "NEXT",
+    "NEXTIF",
+    "DOCPROPERTY",
+    "DOCVARIABLE",
+    "FILENAME",
+    "AUTHOR",
+    "TITLE",
+    "SUBJECT",
+    "KEYWORDS",
+    "COMMENTS",
+    "TEMPLATE",
+    "STYLEREF",
+    "INCLUDEPICTURE",
+    "INCLUDETEXT",
+    "FORMTEXT",
+    "FORMCHECKBOX",
+    "FORMDROPDOWN",
+    "INDEX",
+    "XE",
+    "TA",
+    "TC",
+    "SYMBOL",
+    "QUOTE",
+    "IF",
+    "SET",
+    "ASK",
+    "FILLIN",
+    "BIBLIOGRAPHY",
+    "CITATION",
+    "ADDRESSBLOCK",
+    "GREETINGLINE",
+    "AUTONUM",
+    "AUTONUMLGL",
+    "AUTONUMOUT",
+    "LISTNUM",
+    "BARCODE",
+    "EQ",
+    "=",
+    "ADVANCE",
+    "USERNAME",
+    "USERINITIALS",
+    "USERADDRESS",
+    "EDITTIME",
+    "LASTSAVEDBY",
+    "NUMCHARS",
+    "NUMWORDS",
+    "REVNUM",
+    "SECTION",
+    "SKIPIF",
+    "COMPARE",
+    "GOTOBUTTON",
+    "MACROBUTTON",
+    "PRIVATE",
+    "RD",
+    "INFO",
+    "AUTOTEXT",
+    "AUTOTEXTLIST",
+    "LINK",
+    "EMBED",
+    "DATABASE",
+    "DOCNUM",
+    "SHAPE",
+    "DISPLAYBARCODE",
+    "MERGEBARCODE"
+  ],
+  "rendu": {
+    "langues": [
+      "fra",
+      "eng"
+    ],
+    "dpi": 150,
+    "pages_max": 10
+  }
+}

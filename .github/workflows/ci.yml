@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Installer tesseract, que demande le detecteur de divergence
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-fra
+      - run: pip install -e ".[dev,service,rendu,mcp]"
+      - name: Produire le corpus de pieces d'essai
+        run: python tests/fixtures/generer.py
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: mypy src/perlecta
+      - run: pytest -q
+      - name: Verifier que l'image du service se construit
+        if: matrix.python == '3.12'
+        run: docker build -t perlecta:ci .
